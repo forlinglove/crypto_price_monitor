@@ -19,15 +19,18 @@ func main() {
 	}
 
 	// Initialize price tracker
-	tracker := NewPriceTracker(config)
+	tracker := NewPriceTracker(config.Cryptos, config.CheckInterval)
+	
+	// Initialize alert manager
+	alertManager := NewAlertManager(config.Alerts)
 	
 	// Start monitoring
-	go tracker.StartMonitoring()
+	go tracker.StartMonitoring(alertManager)
 	
 	// Handle graceful shutdown
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
-	<-sigChan
 	
+	<-sigChan
 	fmt.Println("\n🛑 Shutting down cryptocurrency monitor...")
 }
