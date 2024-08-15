@@ -3,38 +3,36 @@ package main
 import (
 	"encoding/json"
 	"os"
+	"time"
 )
 
-// Alert represents a price alert configuration
-type Alert struct {
+type Config struct {
+	Cryptos       []string      `json:"cryptocurrencies"`
+	CheckInterval time.Duration `json:"check_interval_seconds"`
+	Alerts        []AlertRule   `json:"alerts"`
+}
+
+type AlertRule struct {
 	Symbol    string  `json:"symbol"`
-	Condition string  `json:"condition"` // "above" or "below"
+	Condition string  `json:"condition"` // "above", "below"
 	Price     float64 `json:"price"`
 	Message   string  `json:"message"`
 }
 
-// Config holds the application configuration
-type Config struct {
-	APIKey        string   `json:"api_key"`
-	UpdateInterval int     `json:"update_interval"` // in seconds
-	Currencies    []string `json:"currencies"`
-	Alerts        []Alert  `json:"alerts"`
-}
-
-// LoadConfig loads configuration from JSON file
 func LoadConfig(filename string) (*Config, error) {
-	file, err := os.Open(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
-
+	
 	var config Config
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&config)
+	err = json.Unmarshal(data, &config)
 	if err != nil {
 		return nil, err
 	}
-
+	
+	// Convert seconds to duration
+	config.CheckInterval = config.CheckInterval * time.Second
+	
 	return &config, nil
 }
