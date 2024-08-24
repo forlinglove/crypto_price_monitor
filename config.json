@@ -1,0 +1,25 @@
+{
+  "api_key": "your_api_key_here",
+  "update_interval": 30,
+  "currencies": ["BTC", "ETH", "ADA", "DOT"],
+  "alerts": [
+    {
+      "symbol": "BTC",
+      "condition": "above",
+      "price": 50000,
+      "message": "Bitcoin reached target!"
+    },
+    {
+      "symbol": "ETH",
+      "condition": "below",
+      "price": 3000,
+      "message": "Ethereum buying opportunity"
+    },
+    {
+      "symbol": "ADA",
+      "condition": "above",
+      "price": 1.5,
+      "message": "Cardano performing well"
+    }
+  ]
+}
