@@ -1,25 +1,29 @@
 {
-  "api_key": "your_api_key_here",
-  "update_interval": 30,
-  "currencies": ["BTC", "ETH", "ADA", "DOT"],
+  "cryptocurrencies": [
+    "bitcoin",
+    "ethereum",
+    "cardano",
+    "solana"
+  ],
+  "check_interval_seconds": 30,
   "alerts": [
     {
-      "symbol": "BTC",
+      "symbol": "bitcoin",
       "condition": "above",
       "price": 50000,
-      "message": "Bitcoin reached target!"
+      "message": "Bitcoin reached target price!"
     },
     {
-      "symbol": "ETH",
+      "symbol": "ethereum",
       "condition": "below",
       "price": 3000,
-      "message": "Ethereum buying opportunity"
+      "message": "Ethereum dropped below threshold"
     },
     {
-      "symbol": "ADA",
+      "symbol": "solana",
       "condition": "above",
-      "price": 1.5,
-      "message": "Cardano performing well"
+      "price": 100,
+      "message": "Solana is performing well"
     }
   ]
 }
